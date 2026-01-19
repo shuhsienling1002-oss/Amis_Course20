@@ -27,9 +27,9 @@ def safe_play_audio(text):
         st.caption(f"🔇 (語音生成暫時無法使用)")
 
 # --- 0. 系統配置 ---
-st.set_page_config(page_title="Unit 20: O Tafafar", page_icon="🚗", layout="centered")
+st.set_page_config(page_title="Unit 20: O Tafafar", page_icon="🚦", layout="centered")
 
-# --- CSS 美化 (都會藍灰) ---
+# --- CSS 美化 (都會灰藍色調) ---
 st.markdown("""
     <style>
     body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
@@ -43,10 +43,10 @@ st.markdown("""
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         text-align: center;
         margin-bottom: 15px;
-        border-bottom: 4px solid #607D8B;
+        border-bottom: 4px solid #546E7A;
     }
     .emoji-icon { font-size: 48px; margin-bottom: 10px; }
-    .amis-text { font-size: 22px; font-weight: bold; color: #455A64; }
+    .amis-text { font-size: 22px; font-weight: bold; color: #37474F; }
     .chinese-text { font-size: 16px; color: #7f8c8d; }
     
     /* 句子框 */
@@ -61,85 +61,92 @@ st.markdown("""
     /* 按鈕 */
     .stButton>button {
         width: 100%; border-radius: 12px; font-size: 20px; font-weight: 600;
-        background-color: #CFD8DC; color: #37474F; border: 2px solid #607D8B; padding: 12px;
+        background-color: #CFD8DC; color: #37474F; border: 2px solid #546E7A; padding: 12px;
     }
     .stButton>button:hover { background-color: #B0BEC5; border-color: #455A64; }
-    .stProgress > div > div > div > div { background-color: #607D8B; }
+    .stProgress > div > div > div > div { background-color: #546E7A; }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 2. 資料庫 (Unit 20: 全新單字) ---
+# --- 2. 資料庫 (Unit 20: 萌典核實 & 不重複) ---
 vocab_data = [
-    {"amis": "Tosiya", "chi": "汽車", "icon": "🚗", "source": "Loan: Jidosha"},
-    {"amis": "Otobay", "chi": "機車", "icon": "🛵", "source": "Loan: Autobike"},
-    {"amis": "Kicya", "chi": "火車", "icon": "🚂", "source": "Loan: Kisha"},
-    {"amis": "Basu", "chi": "公車 / 巴士", "icon": "🚌", "source": "Loan: Bus"},
-    {"amis": "Hikoki", "chi": "飛機", "icon": "✈️", "source": "Loan: Hikoki"},
-    {"amis": "Tamina", "chi": "船", "icon": "🚢", "source": "Native"},
-    {"amis": "Lalan", "chi": "路 / 道路", "icon": "🛣️", "source": "Native"},
-    {"amis": "Mikacaw", "chi": "搭乘 / 坐 (車/船)", "icon": "💺", "source": "Action: Ride"},
-    {"amis": "Parakat", "chi": "駕駛 / 開 (車)", "icon": "🚗", "source": "Action: Drive"},
-    {"amis": "Romakat", "chi": "走路", "icon": "🚶", "source": "Action: Walk"},
+    {"amis": "Tafafar", "chi": "車輛 / 交通工具", "icon": "🚗", "source": "Moedict: tafafar"},
+    {"amis": "Silamalay", "chi": "火車 (有火的)", "icon": "🚂", "source": "Moedict: silamalay"},
+    {"amis": "Tosiya", "chi": "汽車", "icon": "🚘", "source": "Moedict: tosiya"},
+    {"amis": "Otobay", "chi": "機車", "icon": "🛵", "source": "Moedict: otobay"},
+    {"amis": "Hikoki", "chi": "飛機", "icon": "✈️", "source": "Moedict: hikoki"},
+    {"amis": "Tamina", "chi": "船", "icon": "🚢", "source": "Moedict: tamina"},
+    {"amis": "Lalan", "chi": "道路 / 路", "icon": "🛣️", "source": "Moedict: lalan"},
+    {"amis": "Parakat", "chi": "駕駛 / 開車", "icon": "☸️", "source": "Moedict: parakat"},
+    {"amis": "Mikacaw", "chi": "搭乘 / 騎 / 坐", "icon": "💺", "source": "Moedict: mikacaw"},
+    {"amis": "Basu", "chi": "公車 / 巴士", "icon": "🚌", "source": "Moedict: basu"},
 ]
 
 sentences = [
-    {"amis": "Mikacaw kako to basu.", "chi": "我搭公車。", "icon": "🚌", "source": "Mikacaw (Ride)"},
-    {"amis": "Parakat ci mama to tosiya.", "chi": "爸爸開車。", "icon": "🚗", "source": "Parakat (Drive)"},
-    {"amis": "Tayra i Posong a mikacaw to kicya.", "chi": "搭火車去台東。", "icon": "🚂", "source": "Combine: Location"},
-    {"amis": "Romakat a tayra i pitilidan.", "chi": "走路去學校。", "icon": "🚶", "source": "Combine: School"},
-    {"amis": "Ma'efer ko hikoki i kakarayan.", "chi": "飛機在天空飛。", "icon": "✈️", "source": "Combine: Sky"},
+    {"amis": "Mikacaw kako to basu.", "chi": "我搭公車。", "icon": "🚌", "source": "Mi-kacaw (Ride)"},
+    {"amis": "Parakat ci mama to tosiya.", "chi": "爸爸開車。", "icon": "🚘", "source": "Pa-rakat (Drive)"},
+    {"amis": "Mikacaw to silamalay a tayra i Posong.", "chi": "搭火車去台東。", "icon": "🚂", "source": "Silamalay (Train)"},
+    {"amis": "Tata'ang ko hikoki.", "chi": "飛機很大。", "icon": "✈️", "source": "Grammar: Tata'ang"},
+    {"amis": "Fangcal ko lalan.", "chi": "路很漂亮(好)。", "icon": "🛣️", "source": "Grammar: Fangcal"},
 ]
 
-# --- 3. 隨機題庫 (定義) ---
+# --- 3. 隨機題庫 (Moedict Verified) ---
 raw_quiz_pool = [
     {
         "q": "Mikacaw kako to basu.",
         "audio": "Mikacaw kako to basu",
         "options": ["我搭公車", "我開公車", "我看公車"],
         "ans": "我搭公車",
-        "hint": "Mikacaw 是搭乘 (乘客)"
+        "hint": "Mikacaw 是搭乘/坐 (Moedict)"
     },
     {
         "q": "Parakat ci mama to tosiya.",
         "audio": "Parakat ci mama to tosiya",
         "options": ["爸爸開車", "爸爸修車", "爸爸買車"],
         "ans": "爸爸開車",
-        "hint": "Parakat 是駕駛/讓它走"
+        "hint": "Parakat 是駕駛 (使之走) (Moedict)"
     },
     {
-        "q": "Romakat a tayra i pitilidan.",
-        "audio": "Romakat a tayra i pitilidan",
-        "options": ["走路去學校", "搭車去學校", "跑去學校"],
-        "ans": "走路去學校",
-        "hint": "Romakat 是走路"
+        "q": "Mikacaw to silamalay.",
+        "audio": "Mikacaw to silamalay",
+        "options": ["搭火車", "搭飛機", "搭船"],
+        "ans": "搭火車",
+        "hint": "Silamalay 是火車 (Moedict)"
     },
     {
         "q": "單字測驗：Hikoki",
         "audio": "Hikoki",
-        "options": ["飛機", "火車", "汽車"],
+        "options": ["飛機", "汽車", "機車"],
         "ans": "飛機",
-        "hint": "在天上飛的 (Loanword)"
+        "hint": "在天上飛的 (Moedict)"
     },
     {
         "q": "單字測驗：Tamina",
         "audio": "Tamina",
-        "options": ["船", "車", "飛機"],
+        "options": ["船", "車", "路"],
         "ans": "船",
-        "hint": "在水裡的交通工具"
+        "hint": "在水上的交通工具 (Moedict)"
     },
     {
-        "q": "單字測驗：Kicya",
-        "audio": "Kicya",
-        "options": ["火車", "機車", "公車"],
-        "ans": "火車",
-        "hint": "走在鐵軌上的"
+        "q": "單字測驗：Otobay",
+        "audio": "Otobay",
+        "options": ["機車", "腳踏車", "汽車"],
+        "ans": "機車",
+        "hint": "兩個輪子的 (Moedict)"
     },
     {
         "q": "「道路」的阿美語怎麼說？",
         "audio": None,
         "options": ["Lalan", "Omah", "Loma'"],
         "ans": "Lalan",
-        "hint": "車子走的地方"
+        "hint": "人走的 Lalan (Moedict)"
+    },
+    {
+        "q": "單字測驗：Tafafar",
+        "audio": "Tafafar",
+        "options": ["車輛/交通工具", "房子", "衣服"],
+        "ans": "車輛/交通工具",
+        "hint": "車子的總稱 (Moedict)"
     }
 ]
 
@@ -162,14 +169,14 @@ if 'init' not in st.session_state:
     st.session_state.init = True
 
 # --- 5. 主介面 ---
-st.markdown("<h1 style='text-align: center; color: #455A64;'>Unit 20: O Tafafar</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #666;'>交通工具 (Transportation)</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #37474F;'>Unit 20: O Tafafar</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #666;'>交通工具 (Moedict Verified)</p>", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["📚 詞彙與句型", "🎲 隨機挑戰"])
 
 # === Tab 1: 學習模式 ===
 with tab1:
-    st.subheader("📝 核心單字 (New)")
+    st.subheader("📝 核心單字")
     col1, col2 = st.columns(2)
     for i, word in enumerate(vocab_data):
         with (col1 if i % 2 == 0 else col2):
@@ -212,6 +219,7 @@ with tab2:
             if st.button("🎧 播放題目音檔", key=f"btn_audio_{st.session_state.current_q_idx}"):
                 safe_play_audio(q_data['audio'])
         
+        # 使用洗牌後的選項
         unique_key = f"q_{st.session_state.quiz_id}_{st.session_state.current_q_idx}"
         user_choice = st.radio("請選擇正確答案：", q_data['shuffled_options'], key=unique_key)
         
@@ -230,9 +238,9 @@ with tab2:
         st.progress(1.0)
         st.markdown(f"""
         <div style='text-align: center; padding: 30px; background-color: #CFD8DC; border-radius: 20px; margin-top: 20px;'>
-            <h1 style='color: #455A64;'>🏆 挑戰成功！</h1>
+            <h1 style='color: #37474F;'>🏆 挑戰成功！</h1>
             <h3 style='color: #333;'>本次得分：{st.session_state.score}</h3>
-            <p>你已經學會怎麼搭車了！</p>
+            <p>你已經學會交通工具了！</p>
         </div>
         """, unsafe_allow_html=True)
         
