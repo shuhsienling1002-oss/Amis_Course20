@@ -79,11 +79,11 @@ vocab_data = [
     {"amis": "Lalan", "chi": "道路 / 路", "icon": "🛣️", "source": "Moedict: lalan"},
     {"amis": "Parakat", "chi": "駕駛 / 開車", "icon": "☸️", "source": "Moedict: parakat"},
     {"amis": "Mikalic", "chi": "乘坐 / 搭乘 / 登車", "icon": "💺", "source": "User Fix"},
-    {"amis": "Baso", "chi": "公車 / 巴士", "icon": "🚌", "source": "User Fix"},
+    {"amis": "Paso", "chi": "公車 / 巴士", "icon": "🚌", "source": "User Fix"}, # 修正 Baso -> Paso
 ]
 
 sentences = [
-    {"amis": "Mikalic kako to baso.", "chi": "我搭公車。", "icon": "🚌", "source": "User Fix: Mikalic/Baso"},
+    {"amis": "Mikalic kako to paso.", "chi": "我搭公車。", "icon": "🚌", "source": "User Fix: Paso"}, # 修正
     {"amis": "Parakat ci mama to tosiya.", "chi": "爸爸開車。", "icon": "🚘", "source": "Pa-rakat (Drive)"},
     {"amis": "Mikalic to cinamalay a tayra i Posong.", "chi": "搭火車去台東。", "icon": "🚂", "source": "User Fix: Cinamalay"},
     {"amis": "Mikalic to tofay.", "chi": "騎機車。", "icon": "🛵", "source": "User Fix: Tofay"},
@@ -93,8 +93,8 @@ sentences = [
 # --- 3. 隨機題庫 (User Fix Verified) ---
 raw_quiz_pool = [
     {
-        "q": "Mikalic kako to baso.",
-        "audio": "Mikalic kako to baso",
+        "q": "Mikalic kako to paso.",
+        "audio": "Mikalic kako to paso",
         "options": ["我搭公車", "我開公車", "我看公車"],
         "ans": "我搭公車",
         "hint": "Mikalic 是乘坐/登車"
@@ -132,7 +132,7 @@ raw_quiz_pool = [
         "audio": "Tofay",
         "options": ["機車", "腳踏車", "汽車"],
         "ans": "機車",
-        "hint": "兩個輪子的 (User Fix: Tofay)"
+        "hint": "兩個輪子的"
     },
     {
         "q": "「道路」的阿美語怎麼說？",
@@ -170,7 +170,7 @@ if 'init' not in st.session_state:
 
 # --- 5. 主介面 ---
 st.markdown("<h1 style='text-align: center; color: #37474F;'>Unit 20: O Sapikalic</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #666;'>交通工具 (User Corrected)</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #666;'>交通工具 (Paso Corrected)</p>", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["📚 詞彙與句型", "🎲 隨機挑戰"])
 
