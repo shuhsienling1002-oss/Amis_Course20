@@ -142,8 +142,8 @@ raw_quiz_pool = [
         "hint": "人走的 Lalan"
     },
     {
-        "q": "單字測驗：O Sapikalic",
-        "audio": "O Sapikalic",
+        "q": "單字測驗：Sapikalic",
+        "audio": "Sapikalic",
         "options": ["交通工具 (乘坐用)", "房子", "衣服"],
         "ans": "交通工具 (乘坐用)",
         "hint": "用來 Mikalic 的東西"
@@ -259,3 +259,4 @@ with tab2:
             
             st.session_state.quiz_questions = final_qs
             safe_rerun()
+
