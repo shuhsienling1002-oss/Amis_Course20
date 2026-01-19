@@ -27,7 +27,7 @@ def safe_play_audio(text):
         st.caption(f"🔇 (語音生成暫時無法使用)")
 
 # --- 0. 系統配置 ---
-st.set_page_config(page_title="Unit 20: O Tafafar", page_icon="🚦", layout="centered")
+st.set_page_config(page_title="Unit 20: O Sapikalic", page_icon="🚦", layout="centered")
 
 # --- CSS 美化 (都會灰藍色調) ---
 st.markdown("""
@@ -68,85 +68,85 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 2. 資料庫 (Unit 20: 萌典核實 & 不重複) ---
+# --- 2. 資料庫 (Unit 20: User Fix) ---
 vocab_data = [
-    {"amis": "Tafafar", "chi": "車輛 / 交通工具", "icon": "🚗", "source": "Moedict: tafafar"},
-    {"amis": "Silamalay", "chi": "火車 (有火的)", "icon": "🚂", "source": "Moedict: silamalay"},
+    {"amis": "O Sapikalic", "chi": "交通工具 (用來乘坐的)", "icon": "🚗", "source": "User Fix"},
+    {"amis": "Cinamalay", "chi": "火車", "icon": "🚂", "source": "User Fix"},
     {"amis": "Tosiya", "chi": "汽車", "icon": "🚘", "source": "Moedict: tosiya"},
-    {"amis": "Otobay", "chi": "機車", "icon": "🛵", "source": "Moedict: otobay"},
+    {"amis": "Tofay", "chi": "機車", "icon": "🛵", "source": "User Fix"},
     {"amis": "Hikoki", "chi": "飛機", "icon": "✈️", "source": "Moedict: hikoki"},
     {"amis": "Tamina", "chi": "船", "icon": "🚢", "source": "Moedict: tamina"},
     {"amis": "Lalan", "chi": "道路 / 路", "icon": "🛣️", "source": "Moedict: lalan"},
     {"amis": "Parakat", "chi": "駕駛 / 開車", "icon": "☸️", "source": "Moedict: parakat"},
-    {"amis": "Mikacaw", "chi": "搭乘 / 騎 / 坐", "icon": "💺", "source": "Moedict: mikacaw"},
-    {"amis": "Basu", "chi": "公車 / 巴士", "icon": "🚌", "source": "Moedict: basu"},
+    {"amis": "Mikalic", "chi": "乘坐 / 搭乘 / 登車", "icon": "💺", "source": "User Fix"},
+    {"amis": "Baso", "chi": "公車 / 巴士", "icon": "🚌", "source": "User Fix"},
 ]
 
 sentences = [
-    {"amis": "Mikacaw kako to basu.", "chi": "我搭公車。", "icon": "🚌", "source": "Mi-kacaw (Ride)"},
+    {"amis": "Mikalic kako to baso.", "chi": "我搭公車。", "icon": "🚌", "source": "User Fix: Mikalic/Baso"},
     {"amis": "Parakat ci mama to tosiya.", "chi": "爸爸開車。", "icon": "🚘", "source": "Pa-rakat (Drive)"},
-    {"amis": "Mikacaw to silamalay a tayra i Posong.", "chi": "搭火車去台東。", "icon": "🚂", "source": "Silamalay (Train)"},
-    {"amis": "Tata'ang ko hikoki.", "chi": "飛機很大。", "icon": "✈️", "source": "Grammar: Tata'ang"},
+    {"amis": "Mikalic to cinamalay a tayra i Posong.", "chi": "搭火車去台東。", "icon": "🚂", "source": "User Fix: Cinamalay"},
+    {"amis": "Mikalic to tofay.", "chi": "騎機車。", "icon": "🛵", "source": "User Fix: Tofay"},
     {"amis": "Fangcal ko lalan.", "chi": "路很漂亮(好)。", "icon": "🛣️", "source": "Grammar: Fangcal"},
 ]
 
-# --- 3. 隨機題庫 (Moedict Verified) ---
+# --- 3. 隨機題庫 (User Fix Verified) ---
 raw_quiz_pool = [
     {
-        "q": "Mikacaw kako to basu.",
-        "audio": "Mikacaw kako to basu",
+        "q": "Mikalic kako to baso.",
+        "audio": "Mikalic kako to baso",
         "options": ["我搭公車", "我開公車", "我看公車"],
         "ans": "我搭公車",
-        "hint": "Mikacaw 是搭乘/坐 (Moedict)"
+        "hint": "Mikalic 是乘坐/登車"
     },
     {
         "q": "Parakat ci mama to tosiya.",
         "audio": "Parakat ci mama to tosiya",
         "options": ["爸爸開車", "爸爸修車", "爸爸買車"],
         "ans": "爸爸開車",
-        "hint": "Parakat 是駕駛 (使之走) (Moedict)"
+        "hint": "Parakat 是駕駛"
     },
     {
-        "q": "Mikacaw to silamalay.",
-        "audio": "Mikacaw to silamalay",
+        "q": "Mikalic to cinamalay.",
+        "audio": "Mikalic to cinamalay",
         "options": ["搭火車", "搭飛機", "搭船"],
         "ans": "搭火車",
-        "hint": "Silamalay 是火車 (Moedict)"
+        "hint": "Cinamalay 是火車"
     },
     {
         "q": "單字測驗：Hikoki",
         "audio": "Hikoki",
         "options": ["飛機", "汽車", "機車"],
         "ans": "飛機",
-        "hint": "在天上飛的 (Moedict)"
+        "hint": "在天上飛的"
     },
     {
         "q": "單字測驗：Tamina",
         "audio": "Tamina",
         "options": ["船", "車", "路"],
         "ans": "船",
-        "hint": "在水上的交通工具 (Moedict)"
+        "hint": "在水上的交通工具"
     },
     {
-        "q": "單字測驗：Otobay",
-        "audio": "Otobay",
+        "q": "單字測驗：Tofay",
+        "audio": "Tofay",
         "options": ["機車", "腳踏車", "汽車"],
         "ans": "機車",
-        "hint": "兩個輪子的 (Moedict)"
+        "hint": "兩個輪子的 (User Fix: Tofay)"
     },
     {
         "q": "「道路」的阿美語怎麼說？",
         "audio": None,
         "options": ["Lalan", "Omah", "Loma'"],
         "ans": "Lalan",
-        "hint": "人走的 Lalan (Moedict)"
+        "hint": "人走的 Lalan"
     },
     {
-        "q": "單字測驗：Tafafar",
-        "audio": "Tafafar",
-        "options": ["車輛/交通工具", "房子", "衣服"],
-        "ans": "車輛/交通工具",
-        "hint": "車子的總稱 (Moedict)"
+        "q": "單字測驗：O Sapikalic",
+        "audio": "O Sapikalic",
+        "options": ["交通工具 (乘坐用)", "房子", "衣服"],
+        "ans": "交通工具 (乘坐用)",
+        "hint": "用來 Mikalic 的東西"
     }
 ]
 
@@ -169,8 +169,8 @@ if 'init' not in st.session_state:
     st.session_state.init = True
 
 # --- 5. 主介面 ---
-st.markdown("<h1 style='text-align: center; color: #37474F;'>Unit 20: O Tafafar</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #666;'>交通工具 (Moedict Verified)</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #37474F;'>Unit 20: O Sapikalic</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #666;'>交通工具 (User Corrected)</p>", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["📚 詞彙與句型", "🎲 隨機挑戰"])
 
@@ -240,7 +240,7 @@ with tab2:
         <div style='text-align: center; padding: 30px; background-color: #CFD8DC; border-radius: 20px; margin-top: 20px;'>
             <h1 style='color: #37474F;'>🏆 挑戰成功！</h1>
             <h3 style='color: #333;'>本次得分：{st.session_state.score}</h3>
-            <p>你已經學會交通工具了！</p>
+            <p>你已經學會怎麼搭車了！</p>
         </div>
         """, unsafe_allow_html=True)
         
