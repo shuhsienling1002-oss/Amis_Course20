@@ -70,7 +70,7 @@ st.markdown("""
 
 # --- 2. 資料庫 (Unit 20: User Fix) ---
 vocab_data = [
-    {"amis": "O Sapikalic", "chi": "交通工具 (用來乘坐的)", "icon": "🚗", "source": "User Fix"},
+    {"amis": "Sapikalic", "chi": "交通工具 (用來乘坐的)", "icon": "🚗", "source": "User Fix"},
     {"amis": "Cinamalay", "chi": "火車", "icon": "🚂", "source": "User Fix"},
     {"amis": "Tosiya", "chi": "汽車", "icon": "🚘", "source": "Moedict: tosiya"},
     {"amis": "Tofay", "chi": "機車", "icon": "🛵", "source": "User Fix"},
@@ -259,4 +259,5 @@ with tab2:
             
             st.session_state.quiz_questions = final_qs
             safe_rerun()
+
 
